@@ -124,3 +124,16 @@ db.asircastelao.int
     asir_pDNS	IN A	172.5.5.12
     asir_pDNS2	IN A    172.5.5.13
     alias	IN TXT    mensaje
+
+## En el docker-compose.yml añadimos un cliente con la siguiente configuración:
+
+    asir_cliente:
+        container_name: asir_cliente
+        image: alpine
+        networks:
+            bind9_subnet:
+                ipv4_address: 172.28.5.8
+                stdin_open: true  # docker run -i
+                tty: true         # docker run -t
+                dns:
+                    - 172.28.5.3  # el contenedor dns server
