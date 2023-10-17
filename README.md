@@ -176,6 +176,7 @@
          - 172.28.5.3 # Añadimos esta sección
 
 ***Dentro del cliente hacemos el siguiente comando:***
+
     echo "nameserver [ip del DNS Server]" > /etc/resolv.conf
 
 ***Hacemos el comando 'dig' para comprobar el correcto funcionamiento:***
