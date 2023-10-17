@@ -1,15 +1,13 @@
 $TTL 38400	; 10 hours 40 minutes
-@				IN SOA	ns.asircastelao.int. some.email.address. (
+@		IN SOA	ns.asircastelao.int. some.email.address. (
 				10000002   ; serial
 				10800      ; refresh (3 hours)
 				3600       ; retry (1 hour)
 				604800     ; expire (1 week)
 				38400      ; minimum (10 hours 40 minutes)
 				)
-@				IN NS	ns.asircastelao.int.
-ns				IN A 	172.28.5.3
-asir_pDNS		IN A	172.5.5.12
-test 			IN A  	172.28.5.38
-asir_pDNS2		IN A    172.5.5.13
-asir_cliente 	IN A		172.28.5.8
-alias			IN TXT    mensaje
+@		IN NS	ns.asircastelao.int.
+ns		IN A 	10.1.0.254
+test	IN A	10.1.0.2
+alias	IN A    11.11.11.11
+alias	IN TXT    mensaje

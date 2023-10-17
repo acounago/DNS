@@ -1,17 +1,17 @@
 ## Configura un contenedor con la imagen oficial de bind9 utilizando docker-compose.
 
-Primero creamos la network:
+***Primero creamos la network:***
 
     docker create network bind9_subnet
 
-Para personalizar los parámetros:
+***Para personalizar los parámetros:***
 
         docker network create \
     --driver=bridge \
     --subnet=172.28.0.0/16 \
     --ip-range=172.28.5.0/24 \
     --gateway=172.28.5.254 \
-Despues comfiguramos un docker-compose.yml con los siguientes parámetros:
+***Despues configuramos el contenedor en un docker-compose.yml con los siguientes parámetros:***
     
     services:
         asir_bind9:
@@ -40,13 +40,15 @@ Despues comfiguramos un docker-compose.yml con los siguientes parámetros:
 
 ## Configuracion del DNS
 
-Dentro del directorio "DNS" creamos un fichero llamado "named.conf" y encribimos dentro lo siguiente para apuntar a nuestros ficheros:
+***a) Dentro del directorio "DNS" creamos un fichero llamado "named.conf" y encribimos dentro lo siguiente para apuntar a nuestros ficheros:***
 
     include "/etc/bind/named.conf.options";
+    include "/etc/bind/named.conf.local";
+    include "/etc/bind/named.conf.default-zones";
 
-Después creamos los siguientes ficheros "named.conf.options", "named.conf.default-zones" y "named.conf.local" con las siguientes configuraciones:
+***b) Después creamos los siguientes ficheros "named.conf.options", "named.conf.default-zones" y "named.conf.local" con las siguientes configuraciones:***
 
-"named.conf.options"
+***"named.conf.options"***
 
     options {
         directory "/var/cache/bind";
@@ -64,9 +66,9 @@ Después creamos los siguientes ficheros "named.conf.options", "named.conf.defau
         allow-query {
                 any;
         };
-};
+    };
 
-named.conf.default-zones
+***named.conf.default-zones***
 
     // prime the server with knowledge of the root servers
     zone "." {
@@ -97,7 +99,7 @@ named.conf.default-zones
 	    file "/etc/bind/db.255";
     };
 
-named.conf.local
+***named.conf.local***
 
     zone "asircastelao.int" {
 	    type master;
@@ -109,7 +111,7 @@ named.conf.local
 
 ## Creamos tambien un fichero llamado "zonas" y dentro un fichero llamado "db.asircastelao.int" con la siguiente configuracion:
 
-db.asircastelao.int
+***db.asircastelao.int***
 
     $TTL 38400	; 10 hours 40 minutes
     @		IN SOA	ns.asircastelao.int. some.email.address. (
@@ -121,19 +123,11 @@ db.asircastelao.int
 				)
     @		IN NS	ns.asircastelao.int.
     ns		IN A 	10.1.0.254
-    asir_pDNS	IN A	172.5.5.12
-    asir_pDNS2	IN A    172.5.5.13
+    test	IN A	10.1.0.2
+    alias	IN A    11.11.11.11
     alias	IN TXT    mensaje
 
-## En el docker-compose.yml añadimos un cliente con la siguiente configuración:
 
-    asir_cliente:
-        container_name: asir_cliente
-        image: alpine
-        networks:
-            bind9_subnet:
-                ipv4_address: 172.28.5.8
-                stdin_open: true  # docker run -i
-                tty: true         # docker run -t
-                dns:
-                    - 172.28.5.3  # el contenedor dns server
+## Comprobación con el comando 'dig' del correcto funcionamiento del DNS.
+
+![ Comando dig ](./imagenes/comando.png)
