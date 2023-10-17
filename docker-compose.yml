@@ -1,9 +1,10 @@
 services:
   asir_bind9:
     container_name: asir_DNS1
-    image: internetsystemsconsortium/bind9:9.16
+    image: ubuntu/bind9
     ports:
-      - 53:53
+      - 53:53/tcp 
+      - 53:53/udp
     networks:
       bind9_subnet:
         ipv4_address: 172.28.5.3
