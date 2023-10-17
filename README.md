@@ -152,11 +152,11 @@
 
     ping [ip del servidor dns]
 
-    ![ Ping del cliente al servidor DNS ](./imagenes/pingcliente-server.png)
+![ Ping del cliente al servidor DNS ](./imagenes/pingcliente-server.png)
 
 ***Utilizamos el comando 'dig'***:
 
     dig @[ip del servidor] [nombre de recurso guardado en la db del servidor DNS].asircastealo.int
 
-    ![ Comando dig ](./imagenes/digcliente-server.png)
+![ Comando dig ](./imagenes/digcliente-server.png)
 
