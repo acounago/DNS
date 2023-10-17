@@ -131,3 +131,32 @@
 ## Comprobación con el comando 'dig' del correcto funcionamiento del DNS.
 
 ![ Comando dig ](./imagenes/comando.png)
+
+## Configuración del cliente
+
+    asir_cliente:
+        container_name: asir_cliente
+        image: alpine
+        networks:
+        bind9_subnet:
+            ipv4_address: 172.28.5.8
+        stdin_open: true  # docker run -i
+        tty: true         # docker run -t
+    networks:
+        bind9_subnet: 
+        external: true
+
+## Comprobación desde el cliente del funcionamiento del DNS.
+
+***Realizamos un 'ping'***:
+
+    ping [ip del servidor dns]
+
+    ![ Ping del cliente al servidor DNS ](./imagenes/pingcliente-server.png)
+
+***Utilizamos el comando 'dig'***:
+
+    dig @[ip del servidor] [nombre de recurso guardado en la db del servidor DNS].asircastealo.int
+
+    ![ Comando dig ](./imagenes/digcliente-server.png)
+
