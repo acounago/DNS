@@ -13,12 +13,14 @@ services:
       - ./zonas:/var/lib/bind
   asir_cliente:
     container_name: asir_cliente
-    image: alpine
+    image: ubuntu
     networks:
       bind9_subnet:
         ipv4_address: 172.28.5.8
     stdin_open: true  # docker run -i
     tty: true         # docker run -t
+    dns:
+      - 172.28.5.3
 networks:
   bind9_subnet: 
     external: true

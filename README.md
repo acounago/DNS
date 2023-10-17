@@ -160,3 +160,28 @@
 
 ![ Comando dig ](./imagenes/digcliente-server.png)
 
+## Asignación de nuestro DNS server como DNS del cliente.
+
+***En la configuración del cliente añadimos la sección 'dns' con la ip de este:***
+
+    asir_cliente:
+        container_name: asir_cliente
+        image: alpine
+        networks:
+          bind9_subnet:
+            ipv4_address: 172.28.5.8
+        stdin_open: true  # docker run -i
+        tty: true         # docker run -t
+        dns:
+         - 172.28.5.3 # Añadimos esta sección
+
+***Dentro del cliente hacemos el siguiente comando:***
+    echo "nameserver [ip del DNS Server]" > /etc/resolv.conf
+
+***Hacemos el comando 'dig' para comprobar el correcto funcionamiento:***
+
+![ digfinal ](./imagenes/digfinal1.png)
+
+***Hacemos el comando 'ping' para comprobar el correcto funcionamiento:***
+
+![ pingfinal ](./imagenes/pingfinal.png)
